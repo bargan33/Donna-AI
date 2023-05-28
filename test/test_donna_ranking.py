@@ -4,10 +4,6 @@ from donna_session import DonnaSession
 from utils.file import save_to_json_file, parse_json_file
 import os
 
-company_reqs = '''
-A person who is good at coordinating large projects, excells at teamwork and has at least some programming experience
-'''
-
 
 def test_init():
     if not os.path.exists('serde'):

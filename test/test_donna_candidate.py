@@ -32,7 +32,6 @@ def test_serialize():
     fc = FormsCaller(form_id)
     dc = DonnaCandidate(fc.get_qa()[0], company_reqs)
     dc.evaluate()
-    soft_score = dc.soft_skill_rating
     print(dc)
     dc_recreated = DonnaCandidate.from_dict(dc.to_dict(), company_reqs)
     assert dc_recreated.full_name != ''

@@ -7,7 +7,8 @@ import re
 import shutil
 
 DEFAULT_COMP_REQS = '''
-A person who is good at coordinating large projects, excells at teamwork and has at least some programming experience
+A person who is good at coordinating large projects, excells at
+ teamwork and has at least some programming experience
 '''
 
 
@@ -23,15 +24,6 @@ class DonnaSession:
         self.qa = [()]
         if os.path.exists(self.dir_path + '/QA.json'):
             self.qa = parse_json_file(self.dir_path + '/QA.json')
-
-    def __repr__(self) -> str:
-        res = "DonnaSession\n"
-        res += "name:" + self.name + '\n'
-        res += "dir_path:" + self.dir_path + '\n'
-        res += "forms_link:" + self.forms_link + '\n'
-        res += "comp_reqs:" + self.comp_reqs + '\n'
-        res += "QA:" + str(self.qa) + '\n'
-        return res
 
     def refresh(self) -> str:
         forms_caller = FormsCaller(
@@ -55,3 +47,12 @@ class DonnaSession:
     @staticmethod
     def remove_session(path_to_session: str):
         shutil.rmtree(path_to_session)
+
+    def __repr__(self) -> str:
+        res = "DonnaSession\n"
+        res += "name:" + self.name + '\n'
+        res += "dir_path:" + self.dir_path + '\n'
+        res += "forms_link:" + self.forms_link + '\n'
+        res += "comp_reqs:" + self.comp_reqs + '\n'
+        res += "QA:" + str(self.qa) + '\n'
+        return res

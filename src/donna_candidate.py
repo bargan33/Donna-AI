@@ -1,4 +1,3 @@
-
 from typing import List, Tuple
 from gpt_caller import GPTCaller
 from utils.string import is_question_code, is_question_unit_tests, is_question_full_name, is_question_email, is_question_phone_number, is_question_cv

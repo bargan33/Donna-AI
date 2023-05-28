@@ -1,3 +1,51 @@
 body {
     background-color: white;
 }
+
+.navbar {
+    background-color: orange;
+    color: white;
+    padding-left: 170px;
+    padding-right: 170px;
+}
+
+.custom-container {
+    border: 3px solid #FFA500;
+    /* light orange */
+    border-radius: 15px;
+    padding: 0;
+    background-color: white;
+}
+
+.custom-container p {
+    color: black;
+}
+
+#custom-btn {
+    color: grey !important;
+}
+
+#custom-btn:hover {
+    color: black !important;
+}
+
+
+.custom-button {
+    background-color: #FFA500;
+    color: white;
+}
+
+.custom-button:hover {
+    background-color: #0059FF;
+}
+
+.custom-header {
+    background-color: orange;
+    color: white;
+    padding: 15px;
+}
+
+.custom-title {
+    color: white;
+    font-size: 2em;
+}

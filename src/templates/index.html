@@ -15,6 +15,9 @@
 
     <!-- Include fontawesome -->
     <script src="https://kit.fontawesome.com/6d11a7e4c3.js" crossorigin="anonymous"></script>
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
 </head>
 
 
@@ -33,6 +36,41 @@
             </div>
         </div>
     </nav>
+    <!-- Index Main Body -->
+    <div class="container mt-5 custom-container">
+        <div class="custom-header rounded-top">
+            <h2 class="text-center custom-title">Active Sessions</h2>
+        </div>
+        <div class="table-container">
+            <div class="d-flex justify-content-center">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Session Name</th>
+                            <th scope="col">Refresh</th>
+                            <th scope="col">Delete</th>
+                            <th scope="col">Evaluate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Session</b></td>
+                            <td><button class="btn custom-button"><i class="fa-sharp fa-solid fa-rotate-right"
+                                        style="color: white;"></i></button></td>
+                            <td>
+                                <a class="btn custom-button">
+                                    <i class="fa-regular fa-xmark" style="color: white;"></i>
+                                </a>
+                            </td>
+                            <td><button class="btn custom-button"><i class="fa-solid fa-check"
+                                        style="color: white;"></i></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

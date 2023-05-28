@@ -13,16 +13,16 @@ class DonnaRanking:
         self.comp_reqs = ''
         self.candidates = []
 
-    def init(self, session: DonnaSession, comp_reqs: str):
+    def init(self, session: DonnaSession):
         self.form_id = extract_form_id_from_link(session.forms_link)
-        self.comp_reqs = comp_reqs
+        self.comp_reqs = session.comp_reqs
         self.dir_path = session.dir_path
         fc = FormsCaller(self.form_id)
         QA = fc.get_qa()
         class_candidates = [DonnaCandidate(
             qa, self.comp_reqs) for qa in QA]
         self.candidates = [c.to_dict() for c in class_candidates]
-        self.to_json(self.dir_path + 'donna_ranking.json')
+        self.to_json(self.dir_path + '/donna_ranking.json')
 
     def evaluate(self):
         fc = FormsCaller(self.form_id)
@@ -34,7 +34,7 @@ class DonnaRanking:
             print('waiting so we don\'t overload the api')
             sleep(20)
         self.candidates = [c.to_dict() for c in class_candidates]
-        self.to_json(self.dir_path + 'donna_ranking.json')
+        self.to_json(self.dir_path + '/donna_ranking.json')
 
     def to_dict(self) -> dict:
         return {

@@ -106,6 +106,7 @@ def session_results(session_name):
         with open(path_to_ranking_file, 'r') as file:
             data = json.load(file)
         candidates = data['candidates']
+        comp_reqs = data['comp_reqs']
     else:
         candidates = []
 
@@ -131,7 +132,7 @@ def session_results(session_name):
     else:
         candidates.sort(key=lambda x: x.get('total_rating', 0), reverse=True)
 
-    return render_template('session_results.html', session_name=session_name, candidates=candidates)
+    return render_template('session_results.html', session_name=session_name, candidates=candidates, comp_reqs=comp_reqs)
 
 
 @bp.route('/conversation/')

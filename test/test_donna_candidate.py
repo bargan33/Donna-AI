@@ -25,3 +25,22 @@ def test_evaluate():
     assert dc.total_rating != -1
     assert dc.cv != ''
     assert soft_score > 0 and soft_score <= 100
+
+
+def test_serialize():
+    form_id = '1fbog0GLT9gmdGR09MVUy13ZamgeSFr72sHioOoAi-BI'
+    fc = FormsCaller(form_id)
+    dc = DonnaCandidate(fc.get_qa()[0], company_reqs)
+    dc.evaluate()
+    soft_score = dc.soft_skill_rating
+    print(dc)
+    dc_recreated = DonnaCandidate.from_dict(dc.to_dict(), company_reqs)
+    assert dc_recreated.full_name != ''
+    assert dc_recreated.email != ''
+    assert dc_recreated.phone_number != ''
+    assert dc_recreated.soft_skill_rating != -1
+    assert dc_recreated.code_check != ''
+    assert dc_recreated.code_rating != -1
+    assert dc_recreated.unit_test_rating != ''
+    assert dc_recreated.total_rating != -1
+    assert dc_recreated.cv != ''

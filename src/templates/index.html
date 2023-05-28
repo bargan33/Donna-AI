@@ -36,7 +36,7 @@
             </div>
         </div>
     </nav>
-    <!-- Index Main Body -->
+    <!-- Main Content -->
     <div class="container mt-5 custom-container">
         <div class="custom-header rounded-top">
             <h2 class="text-center custom-title">Active Sessions</h2>
@@ -53,23 +53,27 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for session in sessions %}
                         <tr>
-                            <td><b>Session</b></td>
+                            <td><b>{{ session }}</b></td>
                             <td><button class="btn custom-button"><i class="fa-sharp fa-solid fa-rotate-right"
                                         style="color: white;"></i></button></td>
                             <td>
-                                <a class="btn custom-button">
+                                <a href="{{ url_for('routes.delete_session', session_name=session) }}"
+                                    class="btn custom-button">
                                     <i class="fa-regular fa-xmark" style="color: white;"></i>
                                 </a>
                             </td>
                             <td><button class="btn custom-button"><i class="fa-solid fa-check"
                                         style="color: white;"></i></button></td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
 
 </body>
 

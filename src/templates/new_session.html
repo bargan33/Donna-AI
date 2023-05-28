@@ -40,7 +40,7 @@
     <!-- Main Content -->
     <div class="container mt-5 custom-container">
         <h2 class="text-center">New Session</h2>
-        <form>
+        <form action="{{ url_for('routes.create_new_session') }}" method="post">
             <div class="mb-3">
                 <label for="sessionName" class="form-label">Name your session:</label>
                 <input type="text" class="form-control" id="sessionName" name="sessionName">

@@ -38,9 +38,9 @@ class DonnaSession:
 
     @staticmethod
     def create_new_session(session_name: str, path_to_serde: str, forms_url: str) -> DonnaSession:
+        assert (no_whitespace(path_to_serde + session_name))
         if not os.path.exists(path_to_serde + session_name):
             os.mkdir(path_to_serde + session_name)
-            assert (no_whitespace(path_to_serde + session_name))
             json_dict = {'session_name': session_name,
                          'forms_link': forms_url,
                          'status': 'open'}

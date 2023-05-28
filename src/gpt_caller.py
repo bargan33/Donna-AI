@@ -1,7 +1,7 @@
 import openai
 
 # GET API KEY
-with open('src/keys/gpt_api_key.txt', 'r') as file:
+with open('keys/gpt_api_key.txt', 'r') as file:
     openai.api_key = file.read().strip()
 
 

@@ -59,7 +59,9 @@
                             <td>{{ candidate.code_rating }}</td>
                             <td>{{ candidate.utest_rating }}</td>
                             <td>{{ candidate.total_rating }}</td>
-                            <td><button type="button" class="btn btn-warning">Inquire</button></td>
+                            <td><button type="button" class="btn btn-warning"
+                                    onclick="inquire('{{ session_name }}', '{{ candidate.full_name }}')">Inquire</button>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -75,6 +77,32 @@
             // Redirect to the current URL with the new sorting parameter
             window.location.href = url + '?sort_by=' + sortBy;
         }
+        function inquire(sessionName, candidateName) {
+            fetch('/inquire', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    session_name: sessionName,
+                    candidate_name: candidateName
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        // Redirect to the /conversation route
+                        window.location.href = '/conversation';
+                    } else {
+                        console.log(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+
     </script>
 </body>
 

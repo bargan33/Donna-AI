@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, jsonif
 import os
 from donna_session import DonnaSession
 from donna_ranking import DonnaRanking
+from chatbot import chat_api_call, append_to_file, clear_file, read_file, add_message_to_conversation, get_candidate_cv, CHAT_SYSTEM_CONTEXT
 import json
 
 bp = Blueprint('routes', __name__)
@@ -131,3 +132,80 @@ def session_results(session_name):
         candidates.sort(key=lambda x: x.get('total_rating', 0), reverse=True)
 
     return render_template('session_results.html', session_name=session_name, candidates=candidates)
+
+
+@bp.route('/conversation/')
+def view_chat():
+    file_path = 'cv.txt'
+
+    try:
+        with open(file_path, 'r') as file:
+            file_content = file.read()
+            print('CV found!')
+    except FileNotFoundError:
+        file_content = ''
+        print('CV Not found :C')
+
+    chat_file_path = 'chat_conversation.txt'
+    clear_file(chat_file_path)
+    append_to_file(chat_file_path, "system", CHAT_SYSTEM_CONTEXT)
+    cv_content = "Candidate CV: \n\n " + file_content + \
+        "If you're ready to answer questions about the candidate, answer with: What would you like to know about {candidate name}?"
+    append_to_file(chat_file_path, "user", cv_content)
+
+    return render_template('chat.html')
+
+
+@bp.route('/start_chat', methods=['POST'])
+def start_chat():
+    with open("chat_conversation.txt", "w") as file:
+        json.dump([], file)
+    return jsonify(status="success")
+
+
+# This route processes the user's chat input, makes the call to the AI, and returns the AI's response
+@bp.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.json['message']
+    append_to_file("chat_conversation.txt", "user", user_message)
+
+    conversation = []
+    with open("chat_conversation.txt", "r") as file:
+        for line in file:
+            conversation.append(json.loads(line))
+
+    response = chat_api_call(conversation)
+    assistant_message = response.choices[0].message['content']
+    append_to_file("chat_conversation.txt", "assistant", assistant_message)
+
+    return jsonify(assistant_message)
+
+
+@bp.route('/inquire', methods=['POST'])
+def inquire():
+    session_name = request.json['session_name']
+    candidate_name = request.json['candidate_name']
+
+    json_file_path = os.path.join('serde', session_name, 'donna_ranking.json')
+    cv_file_path = 'cv.txt'
+
+    try:
+        with open(json_file_path, 'r') as file:
+            data = json.load(file)
+            candidates = data['candidates']
+            candidate = next(
+                (c for c in candidates if c['full_name'] == candidate_name), None)
+
+            if candidate:
+                candidate_cv = candidate['cv']
+
+                # Write the candidate's CV to cv.txt
+                with open(cv_file_path, 'w') as cv_file:
+                    cv_file.write(candidate_cv)
+
+                # Redirect to the /conversation route
+                return jsonify(status="success")
+            else:
+                return jsonify(status="error", message="Candidate not found")
+    except FileNotFoundError:
+        return jsonify(status="error", message="JSON file not found")

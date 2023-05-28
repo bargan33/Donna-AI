@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donna AI</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Include custom CSS -->
+    <link href="/static/css/styles.css" rel="stylesheet">
+
+    <!-- Include favicon -->
+    <script src="https://kit.fontawesome.com/6d11a7e4c3.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><b>Donna AI</b></a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-light btn-lg custom-btn" id="custom-btn" href="/new_session">Create
+                            New Session</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="chat-log" style="display: flex; flex-direction: column;"></div>
+
+    <form id="chat-form">
+        <input type="text" id="message-input" autocomplete="off">
+        <button type="submit">Send</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Send the first message automatically when the page loads
+            $.ajax({
+                url: '/chat',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ message: '' }),  // This can be an empty message, as the first message is formed in the back-end
+                success: function (data) {
+                    $('#chat-log').append('<div class="message assistant">ASSISTANT: ' + data + '</div>');
+                    $('#chat-log').scrollTop($('#chat-log')[0].scrollHeight);
+                }
+            });
+
+            // Your existing code for the form submission
+            $('#chat-form').on('submit', function (e) {
+                e.preventDefault();
+
+                let message = $('#message-input').val();
+                $('#message-input').val('');
+                $('#chat-log').append('<div class="message user">YOU: ' + message + '</div>');
+
+                $.ajax({
+                    url: '/chat',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ message: message }),
+                    success: function (data) {
+                        $('#chat-log').append('<div class="message assistant">ASSISTANT: ' + data + '</div>');
+                        $('#chat-log').scrollTop($('#chat-log')[0].scrollHeight);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

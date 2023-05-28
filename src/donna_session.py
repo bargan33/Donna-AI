@@ -6,6 +6,10 @@ import os
 import re
 import shutil
 
+DEFAULT_COMP_REQS = '''
+A person who is good at coordinating large projects, excells at teamwork and has at least some programming experience
+'''
+
 
 class DonnaSession:
     def __init__(self, session_dir_address: str):
@@ -15,7 +19,7 @@ class DonnaSession:
 
         self.name = self.config['session_name']
         self.forms_link = self.config['forms_link']
-        self.status = self.config['status']
+        self.comp_reqs = self.config['comp_reqs']
         self.qa = [()]
         if os.path.exists(self.dir_path + '/QA.json'):
             self.qa = parse_json_file(self.dir_path + '/QA.json')
@@ -25,7 +29,7 @@ class DonnaSession:
         res += "name:" + self.name + '\n'
         res += "dir_path:" + self.dir_path + '\n'
         res += "forms_link:" + self.forms_link + '\n'
-        res += "status:" + self.status + '\n'
+        res += "comp_reqs:" + self.comp_reqs + '\n'
         res += "QA:" + str(self.qa) + '\n'
         return res
 
@@ -37,13 +41,13 @@ class DonnaSession:
                           self.dir_path + '/QA.json')
 
     @staticmethod
-    def create_new_session(session_name: str, path_to_serde: str, forms_url: str) -> DonnaSession:
-        assert (no_whitespace(path_to_serde + session_name))
+    def create_new_session(session_name: str, path_to_serde: str, forms_url: str, comp_reqs=DEFAULT_COMP_REQS) -> DonnaSession:
         if not os.path.exists(path_to_serde + session_name):
             os.mkdir(path_to_serde + session_name)
+            assert (no_whitespace(path_to_serde + session_name))
             json_dict = {'session_name': session_name,
                          'forms_link': forms_url,
-                         'status': 'open'}
+                         'comp_reqs': comp_reqs}
             save_to_json_file(json_dict, path_to_serde +
                               session_name + '/donna_session_config.json')
         return DonnaSession(path_to_serde + session_name)

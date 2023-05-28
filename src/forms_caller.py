@@ -1,20 +1,21 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-from utils.file import save_to_json_file
 from typing import List, Tuple
 
 
 class FormsCaller:
     def __init__(self, form_id: str, credentials_file_path='keys/google_api_key.json'):
         self.form_id = form_id  # ID of your Google Form
-        scopes = ['https://www.googleapis.com/auth/forms',
+
+        SCOPES = ['https://www.googleapis.com/auth/forms',
                   'https://www.googleapis.com/auth/drive']
 
-        credentials = service_account.Credentials.from_service_account_file(
-            credentials_file_path, scopes=scopes
+        CREDENTIALS = service_account.Credentials.from_service_account_file(
+            credentials_file_path, scopes=SCOPES
         )
 
-        self.service = build('forms', 'v1', credentials=credentials)
+        self.service = build('forms', 'v1', credentials=CREDENTIALS)
+
 
     def __query_questions(self) -> dict:
         return self.service.forms().get(formId=self.form_id).execute()

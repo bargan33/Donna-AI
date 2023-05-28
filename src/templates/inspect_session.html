@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session: {{ session_name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/styles.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        // Make sure to escape the JSON to prevent XSS attacks
+        var candidates = JSON.parse('{{ candidates | tojson | safe }}');
+    </script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><b>Donna AI</b></a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-light btn-lg custom-btn" id="custom-btn" href="/new_session">Create
+                            New Session</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <div class="container mt-5 custom-container">
+        <div class="custom-header rounded-top">
+            <h2 class="text-center custom-title">Session: {{ session_name }}</h2>
+            <br>
+            <h3 class="text-center custom-subheader">Candidate List</h3>
+        </div>
+        <div class="table-container">
+            <div class="d-flex justify-content-center">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Full Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for candidate in candidates %}
+                        <tr>
+                            <td>{{ candidate.full_name }}</td>
+                            <td>{{ candidate.email }}</td>
+                            <td>{{ candidate.phone_number }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Buttons for Refresh and View Results -->
+    <div class="d-flex justify-content-center mt-4">
+        <button class="btn custom-btn btn-warning btn-lg me-3" id="refresh-button">Refresh</button>
+        <button class="btn custom-btn btn-warning btn-lg ms-3" id="view-results-button">View Results</button>
+    </div>
+    <script>
+        var candidates = {{ candidates | tojson | safe }};
+
+        $(document).ready(function () {
+            $("#refresh-button").click(function () {
+                $.ajax({
+                    url: '/refresh_session',
+                    method: 'POST',
+                    data: JSON.stringify({
+                        'session_name': '{{ session_name }}'
+                    }),
+                    contentType: 'application/json;charset=UTF-8',
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+            });
+
+            $("#view-results-button").click(function () {
+                console.log('Button Clicked');
+                var candidatesNeedEvaluation = false;
+                for (var i = 0; i < candidates.length; i++) {
+                    if (candidates[i].soft_skill_rating === -1) {
+                        candidatesNeedEvaluation = true;
+                        break;
+                    }
+                }
+
+                if (candidatesNeedEvaluation) {
+                    console.log('Candidates need evaluation');
+                    $.ajax({
+                        url: '/evaluate_session',
+                        method: 'POST',
+                        data: JSON.stringify({
+                            'session_name': '{{ session_name }}'
+                        }),
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function (response) {
+                            window.location.href = '/session_results/' + '{{ session_name }}';
+                        }
+                    });
+                } else {
+                    console.log('Candidates do not need evaluation');
+                    window.location.href = '/session_results/' + '{{ session_name }}';
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

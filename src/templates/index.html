@@ -47,25 +47,26 @@
                     <thead>
                         <tr>
                             <th scope="col">Session Name</th>
-                            <th scope="col">Refresh</th>
                             <th scope="col">Delete</th>
-                            <th scope="col">Evaluate</th>
+                            <th scope="col">Inspect</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for session in sessions %}
                         <tr>
                             <td><b>{{ session }}</b></td>
-                            <td><button class="btn custom-button"><i class="fa-sharp fa-solid fa-rotate-right"
-                                        style="color: white;"></i></button></td>
                             <td>
                                 <a href="{{ url_for('routes.delete_session', session_name=session) }}"
                                     class="btn custom-button">
                                     <i class="fa-regular fa-xmark" style="color: white;"></i>
                                 </a>
                             </td>
-                            <td><button class="btn custom-button"><i class="fa-solid fa-check"
-                                        style="color: white;"></i></button></td>
+                            <td>
+                                <a href="{{ url_for('routes.inspect_session', session_name=session) }}"
+                                    class="btn custom-button">
+                                    <i class="fa-solid fa-arrow-right" style="color: white;"></i>
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

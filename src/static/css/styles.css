@@ -77,3 +77,28 @@ body {
     text-align: center;
     vertical-align: middle;
 }
+
+
+#chat-log {
+    height: 400px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+.message {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.assistant {
+    align-self: flex-start;
+    background-color: #f0f0f0;
+}
+
+.user {
+    align-self: flex-end;
+    background-color: #d0d0ff;
+}

@@ -18,7 +18,7 @@ def test_init():
     ds.refresh()
     assert ds.qa[0][0][0] != ''
     dr = DonnaRanking()
-    dr.init(ds, company_reqs)
+    dr.init(ds)
     print(dr.candidates)
     assert dr.candidates[0]['full_name'] != ''
     save_to_json_file(dr.to_dict(), 'serde/' +
@@ -40,7 +40,7 @@ def test_evaluate():
     ds.refresh()
     assert ds.qa[0][0][0] != ''
     dr = DonnaRanking()
-    dr.init(ds, company_reqs)
+    dr.init(ds)
     dr.evaluate()
     print(dr.candidates)
     assert dr.candidates[0]['full_name'] != ''

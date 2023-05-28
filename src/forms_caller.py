@@ -6,6 +6,7 @@ from typing import List, Tuple
 class FormsCaller:
     def __init__(self, form_id: str, credentials_file_path='keys/google_api_key.json'):
         self.form_id = form_id  # ID of your Google Form
+
         SCOPES = ['https://www.googleapis.com/auth/forms',
                   'https://www.googleapis.com/auth/drive']
 
@@ -14,6 +15,7 @@ class FormsCaller:
         )
 
         self.service = build('forms', 'v1', credentials=CREDENTIALS)
+
 
     def __query_questions(self) -> dict:
         return self.service.forms().get(formId=self.form_id).execute()

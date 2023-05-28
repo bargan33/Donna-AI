@@ -19,7 +19,7 @@ class DonnaCandidate:
         self.code_qa = ('', '')
         self.utest_qa = ('', '')
         self.cv = ''
-        self.total_rating = 0
+        self.total_rating = -1
 
         # find code, unit tests
         unwanted = []

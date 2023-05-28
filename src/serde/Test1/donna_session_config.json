@@ -1,1 +1,5 @@
-{"session_name": "Test1", "forms_link": "https://docs.google.com/forms/d/1fbog0GLT9gmdGR09MVUy13ZamgeSFr72sHioOoAi-BI/edit", "status": "open"}
+{
+    "session_name": "Test1",
+    "forms_link": "https://docs.google.com/forms/d/1fbog0GLT9gmdGR09MVUy13ZamgeSFr72sHioOoAi-BI/edit",
+    "comp_reqs": "A person who is good at coordinating large projects, excells at teamwork and has at least some programming experience"
+}

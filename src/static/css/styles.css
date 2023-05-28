@@ -49,3 +49,31 @@ body {
     color: white;
     font-size: 2em;
 }
+
+.custom-subheader {
+    color: white;
+    font-size: 1.5em;
+}
+
+.custom-text {
+    color: white;
+    font-size: 1em
+}
+
+
+.table-container {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.table th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}

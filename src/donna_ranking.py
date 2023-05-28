@@ -44,14 +44,6 @@ class DonnaRanking:
             'candidates': self.candidates
         }
 
-    def to_json(self, path_to_json_file: str):
-        save_to_json_file(self.to_dict(), path_to_json_file)
-
-    @staticmethod
-    def from_json(path_to_json_file: str) -> DonnaRanking:
-        json_dict = parse_json_file(path_to_json_file)
-        return DonnaRanking.from_dict(json_dict)
-
     @staticmethod
     def from_dict(ranking_dict: dict) -> DonnaRanking:
         dr = DonnaRanking()
@@ -61,6 +53,10 @@ class DonnaRanking:
         dr.candidates = ranking_dict['candidates']
         return dr
 
-    def sort(self):
-        self.candidates = sorted(
-            self.candidates, key=lambda d: d['total_rating'], reverse=True)
+    def to_json(self, path_to_json_file: str):
+        save_to_json_file(self.to_dict(), path_to_json_file)
+
+    @staticmethod
+    def from_json(path_to_json_file: str) -> DonnaRanking:
+        json_dict = parse_json_file(path_to_json_file)
+        return DonnaRanking.from_dict(json_dict)

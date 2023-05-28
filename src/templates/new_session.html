@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donna AI</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Include custom CSS -->
+    <link href="/static/css/styles.css" rel="stylesheet">
+
+    <!-- Include favicon -->
+    <script src="https://kit.fontawesome.com/6d11a7e4c3.js" crossorigin="anonymous"></script>
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-beta1/js/bootstrap.bundle.min.js"></script>
+</head>
+
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><b>Donna AI</b></a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-light btn-lg custom-btn" id="custom-btn" href="/new_session">Create
+                            New Session</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5 custom-container">
+        <h2 class="text-center">New Session</h2>
+        <form>
+            <div class="mb-3">
+                <label for="sessionName" class="form-label">Name your session:</label>
+                <input type="text" class="form-control" id="sessionName" name="sessionName">
+            </div>
+            <div class="mb-3">
+                <label for="employeeDescription" class="form-label">Describe your ideal employee:</label>
+                <input type="text" class="form-control" id="employeeDescription">
+            </div>
+            <div class="mb-3">
+                <label for="sheetsLink" class="form-label">Link to Google Sheets:</label>
+                <input type="text" class="form-control" id="sheetsLink" name="sheetsLink">
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-warning btn-lg">Submit</button>
+            </div>
+        </form>
+    </div>
+
+
+</body>
+
+</html>
